@@ -9,20 +9,27 @@ Import-Module -Name Az
 # Sign in to Azure
 Connect-AzAccount
 
-# Get the available Azure subscriptions
-$subscriptions = Get-AzSubscription
+# Subscription IDs
+$subscription1 = Select-AzSubscription -SubscriptionName "PG-NA-External-Prod-05"
+$subscription2 = Select-AzSubscription -SubscriptionName "PG-NA-External-NonProd-05"
 
-# Prompt the user to select a subscription
-Write-Host "Available subscriptions:"
-$subscriptions | ForEach-Object {
-    Write-Host ("  {0}. {1}" -f $_.Id, $_.Name)
+# Subscription Option
+Write-Host "Seleccione una suscripción:"
+Write-Host "1. $($subscription1.Name)"
+Write-Host "2. $($subscription2.Name)"
+
+# Choose one
+$choice = Read-Host "Ingrese el número de la suscripción (1 o 2)"
+
+# Validation
+if ($choice -eq "1") {
+    $subscriptionId1
+    Write-Host "La suscripción $($subscription1) ha sido seleccionada."
 }
-$selectedSubscriptionId = Read-Host "Enter the ID of the subscription to use"
-
-# Set the selected subscription as the current subscription
-Set-AzContext -SubscriptionId $selectedSubscriptionId
-
-# Display information about the selected subscription
-$selectedSubscription = Get-AzSubscription -SubscriptionId $selectedSubscriptionId
-Write-Host "Selected subscription:"
-$selectedSubscription
+elseif ($choice -eq "2") {
+    $subscriptionId2
+    Write-Host "La suscripción $($subscription2) ha sido seleccionada."
+}
+else {
+    Write-Host "Opción inválida. No se ha seleccionado ninguna suscripción."
+}
