@@ -14,4 +14,4 @@ Devops Repository
     * BASH-New-VG-LG.sh
 
 3. ```Terraform```
-    * 
+    * -
