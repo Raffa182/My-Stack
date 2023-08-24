@@ -10,8 +10,8 @@ Devops Repository
     * PS-Azure-Login-NonProd-05.ps1
     * PS-Azure-Check RG-VmOrNotVm.ps1
 
-2. ```Terraform```
-    * -
+2. ```Bash```
+    * BASH-New-VG-LG.sh
 
 3. -
 
