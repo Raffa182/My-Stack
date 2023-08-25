@@ -12,6 +12,7 @@ Devops Repository
 
 2. ```Bash```
     * BASH-New-VG-LG.sh
+    * BASH-Backup-Redmine.sh
 
 3. ```Terraform```
     * -
