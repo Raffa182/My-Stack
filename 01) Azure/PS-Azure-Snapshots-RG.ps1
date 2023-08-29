@@ -5,12 +5,13 @@
 #Connect-AzAccount -SubscriptionId "c94548cf-d314-4bd5-abd2-eee92de2aab7"
 
 # Backup RG Completo
-$rg_name = "AZ-RG-SAP-LAB-EASTUS"
-$vmList = Get-AzVM -ResourceGroupName $rg_name
+#$rg_name = "AZ-RG-SAP-LAB-EASTUS"
+#$vmList = Get-AzVM -ResourceGroupName $rg_name
 
 #Backup VM Alone
-#$vm_name = ""
-#$vmList = Get-AzVM -Name $vm_name -ResourceGroupName $rg_name
+$vm_name = "azlsaplabas02"
+$rg_name = "AZ-RG-SAP-LAB-EASTUS"
+$vmList = Get-AzVM -Name $vm_name -ResourceGroupName $rg_name
 
 # Get the current date
 $currentDate = Get-Date -Format "yyyyMMdd"
@@ -23,7 +24,7 @@ foreach ($vm in $vmList) {
     
 
     # Snapshot del OS Disk
-    $osSnapshotName = "$($vm.Name)-Backup-OSDisk-$currentDate"
+    $osSnapshotName = "$($osDisk.Name)-$currentDate"
     $osSnapshotConfig = New-AzSnapshotConfig -SourceUri $osDisk.ManagedDisk.Id -CreateOption Copy -Location $vm.Location
     New-AzSnapshot -Snapshot $osSnapshotConfig -SnapshotName $osSnapshotName -ResourceGroupName $rg_name
 
@@ -31,7 +32,8 @@ foreach ($vm in $vmList) {
 
     # Snapshot de los DataDisks
     foreach ($dataDisk in $dataDisks) {
-        $dataSnapshotName = "$($vm.Name)-Backup-DataDisk-$($dataDisk.Lun)-$currentDate"
+        
+        $dataSnapshotName = "$($dataDisk.Name)-Lun-$($dataDisk.Lun)-$currentDate"
         $dataSnapshotConfig = New-AzSnapshotConfig -SourceUri $dataDisk.ManagedDisk.Id -CreateOption Copy -Location $vm.Location
         New-AzSnapshot -Snapshot $dataSnapshotConfig -SnapshotName $dataSnapshotName -ResourceGroupName $rg_name
 
