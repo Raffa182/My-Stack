@@ -5,12 +5,12 @@
 #Connect-AzAccount -SubscriptionId "c94548cf-d314-4bd5-abd2-eee92de2aab7"
 
 # Backup RG Completo
-#$rg_name = "AZ-RG-SAP-LAB-EASTUS"
+#$rg_name = Read-Host -Prompt 'Input your Resource Group name'
 #$vmList = Get-AzVM -ResourceGroupName $rg_name
 
 #Backup VM Alone
-$vm_name = "azlsaplabas02"
-$rg_name = "AZ-RG-SAP-LAB-EASTUS"
+$vm_name = Read-Host -Prompt 'Input your VM name'
+$rg_name = Read-Host -Prompt 'Input your Resource Group name'
 $vmList = Get-AzVM -Name $vm_name -ResourceGroupName $rg_name
 
 # Get the current date
