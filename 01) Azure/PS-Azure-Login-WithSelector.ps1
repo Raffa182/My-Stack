@@ -31,14 +31,14 @@ if ($choice -eq "1") {
     $host.ui.RawUI.WindowTitle = "PG-NA-Enterprise-Prod-05"
 
     # Login to PG-NA-Enterprise-Prod-05
-    Connect-AzAccount -SubscriptionId "c94548cf-d314-4bd5-abd2-eee92de2aab7"
+    Connect-AzAccount -SubscriptionId "c94548cf-d314-4bd5-abd2-eee92de2aab7" -DeviceCode
 }
 elseif ($choice -eq "2") {
     # Change Title for PG-NA-Enterprise-NonProd-05
     $host.ui.RawUI.WindowTitle = "PG-NA-Enterprise-NonProd-05"
 
     # Login to PG-NA-Enterprise-NonProd-05
-    Connect-AzAccount -SubscriptionId "2aeadce5-5c3b-454c-8f9d-2cf54bbe04a5"
+    Connect-AzAccount -SubscriptionId "2aeadce5-5c3b-454c-8f9d-2cf54bbe04a5" -DeviceCode
 }
 else {
     Write-Host "Invalid option"

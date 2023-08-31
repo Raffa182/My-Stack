@@ -11,7 +11,7 @@
 #>
 # Login to Subscription ID
 
-Connect-AzAccount -SubscriptionId "Subscription ID Number"
+Connect-AzAccount -SubscriptionId "Subscription ID Number" -DeviceCode
 
 # Get the list of all RG groups in current SID
 

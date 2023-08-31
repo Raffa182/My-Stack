@@ -14,4 +14,4 @@
 $host.ui.RawUI.WindowTitle = "PG-NA-Enterprise-NonProd-05"
 
 # Login to PG-NA-Enterprise-NonProd-05
-Connect-AzAccount -SubscriptionId "2aeadce5-5c3b-454c-8f9d-2cf54bbe04a5"
+Connect-AzAccount -SubscriptionId "2aeadce5-5c3b-454c-8f9d-2cf54bbe04a5" -DeviceCode
