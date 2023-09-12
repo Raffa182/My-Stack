@@ -66,12 +66,11 @@ if ($choice -eq 'Y' -or $choice -eq 'y') {
     Write-Host 'No VMs will be deleted.'
 }
 
-# Ask for the target region and zone for the new VMs
-$target_region = Read-Host -Prompt 'Input the target region for the new VMs'
+# Ask for the zone for the new VMs
 $zone = Read-Host -Prompt 'Input the zone for the new VMs (e.g., 1, 2, 3)'
 
-# Ask if you want to create new VMs in a different or same region/zone using the snapshots
-$choice = Read-Host -Prompt 'Do you want to create new VMs in a different region using the snapshots? (Y/N)'
+# Ask if you want to create new VMs in a different or same zone using the snapshots
+$choice = Read-Host -Prompt 'Do you want to create new VMs in a different zone using the snapshots? (Y/N)'
 if ($choice -eq 'Y' -or $choice -eq 'y') {
     foreach ($vm_name in $vm_name_array) {
         $vm = $vmConfigs[$vm_name.Trim()]
@@ -85,14 +84,14 @@ if ($choice -eq 'Y' -or $choice -eq 'y') {
         $newVMConfig = Set-AzVMOSDisk -VM $newVMConfig -ManagedDiskId (Get-AzSnapshot -ResourceGroupName $rg_name -SnapshotName $osSnapshotName).Id -CreateOption Attach -Windows
         $newVMConfig = Add-AzVMDataDisk -VM $newVMConfig -Name $vm.StorageProfile.DataDisks.Name -ManagedDiskId (Get-AzSnapshot -ResourceGroupName $rg_name -SnapshotName $dataSnapshotName).Id -Lun $vm.StorageProfile.DataDisks.Lun
 
-        # Set the target region and zone
+        # Set the zone
         $newVMConfig = Set-AzVMZone -VM $newVMConfig -Zone $zone
 
         # Confirmation prompt
-        $confirmChoice = Read-Host -Prompt "Create a new VM named $($vm_name.Trim()) in region $target_region with the same NIC and snapshots? (Y/N)"
+        $confirmChoice = Read-Host -Prompt "Create a new VM named $($vm_name.Trim()) in the same region with the same NIC and snapshots? (Y/N)"
         if ($confirmChoice -eq 'Y' -or $confirmChoice -eq 'y') {
-            # Create the new VM in the target region
-            $newVM = New-AzVM -ResourceGroupName $rg_name -Location $target_region -VM $newVMConfig -Verbose
+            # Create the new VM in the same region
+            $newVM = New-AzVM -ResourceGroupName $rg_name -Location $vm.Location -VM $newVMConfig -Verbose
 
             # Get the NIC from the original VM
             $originalNIC = Get-AzNetworkInterface -ResourceGroupName $rg_name -Name $vm.NetworkProfile.NetworkInterfaces[0].Id.Split("/")[-1]
