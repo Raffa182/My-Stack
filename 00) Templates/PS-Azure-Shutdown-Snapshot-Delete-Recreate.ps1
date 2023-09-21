@@ -76,8 +76,8 @@ if ($choice -eq 'Y' -or $choice -eq 'y') {
         $vm = $vmConfigs[$vm_name.Trim()]
         
         # Define snapshot names based on the original VM names
-        $osSnapshotName = "$($vm_name.Trim())-OSDisk-$currentDate"
-        $dataSnapshotName = "$($vm_name.Trim())-DataDisk-$currentDate"
+        $osSnapshotName = "$($vm_name.Trim())-OSDisk-Lun$($osDisk.Lun)-$currentDate"
+        $dataSnapshotName = "$($vm_name.Trim())-DataDisk-Lun$($dataDisk.Lun)-$currentDate"
 
         # Create a new VM configuration based on the snapshots in the target region
         $newVMConfig = New-AzVMConfig -VMName $vm_name.Trim() -VMSize $vm.HardwareProfile.VmSize
