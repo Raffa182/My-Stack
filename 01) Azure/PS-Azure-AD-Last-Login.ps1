@@ -1,16 +1,16 @@
-# Instalar el módulo Az si no está instalado
-#if (-not (Get-Module -Name Az -ListAvailable)) {
-#    Install-Module -Name Az -AllowClobber -Force -Scope CurrentUser
-#}
+# Importar el módulo AzureAD o AzureADPreview según sea necesario
+if (-not (Get-Module -Name AzureAD -ListAvailable)) {
+    Install-Module -Name Az -AllowClobber -Force -Scope CurrentUser
+}
 
-# Importar el módulo Az
+# Importar el módulo Az o AzureADPreview según sea necesario
 Import-Module Az
 
 # Conectar a Azure AD (iniciar sesión)
 Connect-AzAccount
 
-# Obtener la información de todos los usuarios
-$usuarios = Get-AzADUser -All $true
+# Obtener la información de todos los usuarios con paginación
+$usuarios = Get-AzureADUser -All $true -Top 500 # Ajusta el valor de -Top según sea necesario
 
 # Crear una lista para almacenar los resultados
 $resultados = @()
