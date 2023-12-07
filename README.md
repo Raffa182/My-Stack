@@ -4,6 +4,7 @@ Devops Repository
 ## -
 
 1. ```Azure```
+    * PS-Azure-AD-Last-Login.ps1
     * PS-Azure-Login-WithSelector.ps1
     * PS-Azure-Login-Prod-05.ps1
     * PS-Azure-Login-NonProd-05.ps1
